@@ -67,3 +67,13 @@ a.video-link:visited, a.video-link:link, a.video-link:hover, a.video-link:active
     color: #eceff1;
     text-align: center;
 }
+
+.search-player {
+    width: 20%;
+    background: #211d21;
+    border-color: #211d21;
+    border-radius: .5rem;
+    color: #fff;
+    padding: 1em;
+    margin: 0 10px;
+}
