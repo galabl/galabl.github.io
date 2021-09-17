@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
+        <title>pubg.report w/o TDM</title>
         <script
 			  src="https://code.jquery.com/jquery-3.6.0.min.js"
 			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -13,9 +14,9 @@
     </head>
     <body>
         <h1 class="site-title">PUBG.report without TDM</h1>
-        <div class="search">
+        <form action="#" method="get" name="form-search">
             <input type="text" name="search" class="search-player" placeholder="Enter your PUBG username (PC only)">
-        </div>
+        </form>
         <div id="reports"></div>
     </body>
     <script>
@@ -24,13 +25,14 @@
         .then(function(data) {
             mapData = data;
         })
-        
-        $.get("https://api.pubg.report/v1/players/account.76b380e62e0a445fb78e344cf1435d96/streams")
-        .then(function(response) {
-            let reports_parsed = parseShittyTdm(response)
-            Object.keys(reports_parsed).forEach(function(key) {
-                reports_parsed[key].forEach(function(value) {
-                    $("#reports").append(`
+
+        function getPlayerData(player_id) {
+            $.get(`https://api.pubg.report/v1/players/${player_id}/streams`)
+                .then(function(response) {
+                    let reports_parsed = parseShittyTdm(response)
+                    Object.keys(reports_parsed).forEach(function(key) {
+                        reports_parsed[key].forEach(function(value) {
+                            $("#reports").append(`
                         <a href="https://www.twitch.tv/videos/${value.VideoID.replace('v', '')}?t=${parseTimeForTwitchVod(value.TimeDiff)}" class="video-link" target="_blank">
                             <div class="report ${parseEvent(value.Event)["class"]}" id="${value.ID}">
                                 <p class="date">${value.Date}</p>
@@ -45,9 +47,10 @@
                             </div>
                         </a>
                     `)
+                        })
+                    })
                 })
-            })
-        })
+        }
 
         function parseShittyTdm(resp) {
             Object.keys(resp).forEach(function(key) {
@@ -74,7 +77,6 @@
         }
 
         function parseEvent(event) {
-            console.log(event)
             switch (event) {
                 case "LogPlayerKill":
                     return {
@@ -108,5 +110,14 @@
         function parseMode(mode) {
             return mode.split("-");
         }
+
+        $("form[name=form-search]").submit(function (e) {
+            e.preventDefault()
+            let username = e.target[0].value;
+            $.get(`https://api.pubg.report/search/${username}`)
+            .then(function (response) {
+                getPlayerData(response[0].id);
+            })
+        })
     </script>
 </html>

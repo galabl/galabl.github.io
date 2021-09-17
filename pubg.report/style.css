@@ -76,4 +76,5 @@ a.video-link:visited, a.video-link:link, a.video-link:hover, a.video-link:active
     color: #fff;
     padding: 1em;
     margin: 0 10px;
+    box-shadow: 0 4px 12px -1px #0000004d,0 2px 8px -1px #0000001a,inset 0 12px 12px -12px #304ffe;
 }
