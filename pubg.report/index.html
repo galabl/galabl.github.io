@@ -11,6 +11,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-K1H6046E1Y"></script>
         <script>
@@ -27,7 +29,8 @@
     <body>
         <h1 class="site-title">PUBG.report without TDM</h1>
         <form action="#" method="get" name="form-search">
-            <input type="text" name="search" class="search-player" placeholder="Enter your PUBG username (PC only)">
+            <input type="text" name="search" class="search-player" placeholder="Enter your PUBG username (PC only)" id="search-player">
+            <div id="results"></div>
         </form>
         <div id="reports"></div>
     </body>
@@ -38,10 +41,12 @@
             mapData = data;
         })
 
-        function getPlayerData(player_id) {
+        function getPlayerData(player_id, nickname) {
+            $("#results").empty();
+            $("#search-player").val(nickname);
             $.get(`https://api.pubg.report/v1/players/${player_id}/streams`)
                 .then(function(response) {
-                    let reports_parsed = parseShittyTdm(response)
+                    let reports_parsed = parseShittyTdm(response);
                     Object.keys(reports_parsed).forEach(function(key) {
                         reports_parsed[key].forEach(function(value) {
                             $("#reports").append(`
@@ -123,13 +128,25 @@
             return mode.split("-");
         }
 
-        $("form[name=form-search]").submit(function (e) {
-            e.preventDefault()
-            let username = e.target[0].value;
-            $.get(`https://api.pubg.report/search/${username}`)
-            .then(function (response) {
-                getPlayerData(response[0].id);
-            })
+        $("#search-player").on("keyup", function (el) {
+            let input = el.target.value;
+            if (input.length >= 3) {
+                $.get(`https://api.pubg.report/search/${input}`)
+                .then(function (response) {
+                    $("#results").empty();
+                    Object.keys(response).forEach(function(key) {
+                        let value = response[key];
+                        $("#results").append(`
+                            <div class="result">
+                                <div class="player" onclick="getPlayerData('${value.id}', '${value.nickname}')">
+                                    <span class="platform">(${value.shard})</span>
+                                    <span class="nickname">${value.nickname}</span>
+                                </div>
+                            </div>
+                        `)
+                    })
+                })
+            }
         })
     </script>
 </html>
