@@ -43,6 +43,7 @@
 
         function getPlayerData(player_id, nickname) {
             $("#results").empty();
+            $("#reports").empty();
             $("#search-player").val(nickname);
             $.get(`https://api.pubg.report/v1/players/${player_id}/streams`)
                 .then(function(response) {
