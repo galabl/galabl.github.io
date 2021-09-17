@@ -1,0 +1,69 @@
+body {
+    background: #131113;
+    font-family: 'Roboto', serif;
+    font-size: 14px;
+}
+.report {
+    color: #eceff1;
+    background: #211d21;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    margin: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.report .date {
+    font-size: 12px;
+    color: #cacfd0;
+}
+
+.report p, .report h3 {
+    margin: 5px 10px;
+}
+
+.report.killed, .report.knocked {
+    box-shadow: inset 0 .2rem 0 #69f0ae;
+}
+.report.killed-by, .report.knocked-by {
+    box-shadow: inset 0 .2rem 0 #f44336;
+}
+
+.report.killed.teammate-pov {
+    box-shadow: inset 0 .2rem 0 #b4df77;
+}
+
+span.killed, span.knocked {
+    color: #30e337;
+}
+span.killed-by, span.knocked-by {
+    color: #ff0000;
+}
+.inline-info {
+    display: inline-flex;
+}
+
+.tag {
+    font-size: .6rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: .4;
+    border: 1px solid #ffffff4d;
+    background: #fff3;
+    border-radius: .5rem;
+    display: inline-block;
+    padding: .5rem;
+    line-height: 1;
+    margin: 5px 0 0 10px;
+}
+
+a.video-link:visited, a.video-link:link, a.video-link:hover, a.video-link:active {
+    text-decoration: none;
+    color: #eceff1;
+}
+
+.site-title {
+    color: #eceff1;
+    text-align: center;
+}
