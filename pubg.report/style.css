@@ -119,6 +119,7 @@ a.video-link:visited, a.video-link:link, a.video-link:hover, a.video-link:active
     color: #eceff1;
     padding: 1rem;
     border-top: 1px solid rgba(236, 239, 241, 0.51);
+    background: #131113;
 }
 
 a:hover, a:link, a:visited {
