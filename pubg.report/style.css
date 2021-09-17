@@ -140,5 +140,7 @@ a:hover, a:link, a:visited {
     .container {
         width: 100%;
     }
-
+    .result {
+        width: 100%;
+    }
 }
