@@ -33,7 +33,7 @@ body {
     box-shadow: inset 0 .2rem 0 #f44336;
 }
 
-.report.killed.teammate-pov {
+.report.killed.teammate-pov, .report.knocked.teammate-pov {
     box-shadow: inset 0 .2rem 0 #b4df77;
 }
 
@@ -82,7 +82,7 @@ a.video-link:visited, a.video-link:link, a.video-link:hover, a.video-link:active
 }
 
 .result {
-    background: #211d21;
+    background: #282528;
     color: #eceff1;
     width: 20%;
     padding: 1em;
