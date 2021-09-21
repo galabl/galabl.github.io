@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/vue.pubg.report/',
+  publicPath: '/pubg.report/',
   transpileDependencies: [
     'vuetify'
   ],
