@@ -9,6 +9,7 @@
     <v-navigation-drawer
         app
         v-model="drawer"
+        :width="nav_width"
         >
       <v-list-item>
         <v-list-item-content>
@@ -139,6 +140,14 @@ export default {
             .catch(err => {
               console.log(err)
             })
+      }
+    }
+  },
+  computed: {
+    nav_width() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '100%';
+        default: return '256';
       }
     }
   }
