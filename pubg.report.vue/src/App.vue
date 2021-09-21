@@ -98,7 +98,8 @@ export default {
     Home,
   },
   mounted() {
-    this.stream_history = JSON.parse(localStorage.getItem("streams_history"))
+    if (JSON.parse(localStorage.getItem("streams_history")))
+      this.stream_history = JSON.parse(localStorage.getItem("streams_history"))
   },
   data() {
     return {

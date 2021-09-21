@@ -10,9 +10,12 @@ npm run build
 cd dist
 
 git init
-git add -A
+git remote add origin git@github.com:galabl/pubg.report.git
+git push -d origin gh-pages
+git branch -M gh-pages
+git add .
 git commit -am 'deploy'
-git push -f git@github.com:galabl/pubg.report.git main:gh-pages
+git push origin gh-pages
 
 
 cd -
