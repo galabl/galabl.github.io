@@ -55,23 +55,25 @@
       </v-list>
       <v-divider></v-divider>
       <v-subheader>History</v-subheader>
-      <div v-if="history">
-        <v-btn
-            v-for="player in history"
-            :key="player.ID"
-            class="ma-2"
-            small
-            @click="openStreams(player)"
+        <v-list
+            v-if="stream_history"
+            dense
+            nav
         >
-          {{ player.nickname }}
-          <v-icon
-              right
-              dark
+          <v-list-item
+              v-for="player in stream_history"
+              :key="player.ID"
+              @click="openStreams(player)"
           >
-            ${{ player.shard }}
-          </v-icon>
-        </v-btn>
-      </div>
+            <v-list-item-icon>
+              <v-icon>${{ player.shard }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ player.nickname }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
     </v-navigation-drawer>
     <v-main>
       <v-container fluid>
@@ -96,7 +98,7 @@ export default {
     Home,
   },
   mounted() {
-    this.history = JSON.parse(localStorage.getItem("streams_history"))
+    this.stream_history = JSON.parse(localStorage.getItem("streams_history"))
   },
   data() {
     return {
@@ -104,7 +106,7 @@ export default {
       loading: false,
       searchPlayer: "",
       searchResult: [],
-      history: []
+      stream_history: []
     }
   },
   methods: {
@@ -112,9 +114,12 @@ export default {
       if (this.$vuetify.breakpoint.name === 'xs')
         this.drawer = false
       this.$store.dispatch('getPlayerStreams', player)
-      if (!this.history.includes(player))
-        this.history.push(player)
-      localStorage.setItem('streams_history', JSON.stringify(this.history));
+      if (!this.stream_history.includes(player)) {
+        this.stream_history.push(player)
+      } else {
+        console.log('uslo')
+      }
+      localStorage.setItem('streams_history', JSON.stringify(this.stream_history));
     },
     onClearClicked() {
       this.$store.state.streams = ""
